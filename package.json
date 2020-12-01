@@ -1,0 +1,7 @@
+{
+  "name": "aoc",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Mikael Malm <mikaelmalm91@gmail.com>",
+  "license": "MIT"
+}
