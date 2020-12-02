@@ -5,6 +5,7 @@
   "author": "Mikael Malm <mikaelmalm91@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "1": "node day1"
+    "1": "node day1",
+    "2": "node day2"
   }
 }
