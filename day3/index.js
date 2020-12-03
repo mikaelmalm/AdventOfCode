@@ -17,8 +17,7 @@ const mapStatus = (data, position) => {
   const mapWidth = data[0].length;
 
   const stepsDown = position.y;
-  const stepsToRight =
-    position.x < mapWidth ? position.x : position.x % mapWidth;
+  const stepsToRight = position.x % mapWidth;
 
   const currentMapPosition = data[stepsDown][stepsToRight];
 
