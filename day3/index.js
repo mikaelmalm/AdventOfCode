@@ -8,9 +8,9 @@ const readFile = () =>
     .then((res) => res.map((field) => field.split("")))
     .catch((err) => console.log(err));
 
-const move = (pos) => ({
-  x: pos.x + 3,
-  y: pos.y + 1,
+const move = (pos, pattern = { x: 3, y: 1 }) => ({
+  x: pos.x + pattern.x,
+  y: pos.y + pattern.y,
 });
 
 const mapStatus = (data, position) => {
@@ -32,14 +32,14 @@ const hitTree = (data, position) => {
   return mapPositionStatus === TREE;
 };
 
-const calculatePath = (data) => {
+const calculatePath = (data, pattern) => {
   return data.reduce(
     (result) => {
       // end of slope
-      if (result.y === data.length - 1) return result;
+      if (result.y === data.length - pattern.y) return result;
 
       // move unit
-      const updatedPos = move(result);
+      const updatedPos = move(result, pattern);
 
       // look if hit tree
       const treeHit = hitTree(data, updatedPos);
@@ -58,12 +58,30 @@ const calculatePath = (data) => {
   );
 };
 
+const calculateTreesHitPerPaths = (data, patterns) => {
+  return patterns.reduce((treesHit, pattern) => {
+    const result = calculatePath(data, pattern);
+
+    return treesHit * result.treesHit;
+  }, 1); // start on one, since we are multiplying
+};
+
 const run = async () => {
   const data = await readFile();
 
-  const result = calculatePath(data);
+  const patterns = [
+    { x: 1, y: 1 },
+    { x: 3, y: 1 },
+    { x: 5, y: 1 },
+    { x: 7, y: 1 },
+    { x: 1, y: 2 },
+  ];
 
-  console.log(result);
+  const result = calculatePath(data, patterns[1]);
+  const result2 = calculateTreesHitPerPaths(data, patterns);
+
+  console.log("part 1", result);
+  console.log("part 2", result2);
 };
 
 run();
