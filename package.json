@@ -7,6 +7,7 @@
   "scripts": {
     "1": "node day1",
     "2": "node day2",
-    "3": "node day3"
+    "3": "node day3",
+    "4": "node day4"
   }
 }
