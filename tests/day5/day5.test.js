@@ -1,4 +1,4 @@
-import { readFile } from "../../utils";
+import { readFile } from '../../utils';
 
 import {
   getSeatID,
@@ -9,22 +9,26 @@ import {
   getRowsWithMissingSeats,
   INITIAL_ROW_INTERVAL,
   INITIAL_COLUMN_INTERVAL,
-} from "../../days/day5";
+} from '../../days/day5';
 
-describe("[05]", () => {
-  const exampleInput = ["BFFFBBFRRR", "FFFBBBFRRR", "BBFFBBFRLL"];
+describe('[05]', () => {
+  const exampleInput = ['BFFFBBFRRR', 'FFFBBBFRRR', 'BBFFBBFRLL'];
 
-  it("should format instructions correctly", () => {
+  it('should format instructions correctly', () => {
     const expectedAnswer = { row: 7, column: 3 };
     const actualAnswer = formatBoardingPass(exampleInput[0]);
 
-    expect(actualAnswer.rowDirections.length).toEqual(expectedAnswer.row);
-    expect(actualAnswer.columnDirections.length).toEqual(expectedAnswer.column);
+    expect(actualAnswer.rowDirections.length).toEqual(
+      expectedAnswer.row,
+    );
+    expect(actualAnswer.columnDirections.length).toEqual(
+      expectedAnswer.column,
+    );
   });
 
-  it("should return correct row", () => {
-    const input = ["B", "F", "F", "F", "B", "B", "F"];
-    const input2 = ["F", "F", "F", "B", "B", "B", "F"];
+  it('should return correct row', () => {
+    const input = ['B', 'F', 'F', 'F', 'B', 'B', 'F'];
+    const input2 = ['F', 'F', 'F', 'B', 'B', 'B', 'F'];
 
     const expectedAnswer = 70;
     const expectedAnswer2 = 14;
@@ -36,21 +40,24 @@ describe("[05]", () => {
     expect(actualAnswer2).toEqual(expectedAnswer2);
   });
 
-  it("should return correct seat", () => {
-    const input = ["R", "R", "R"];
-    const input2 = ["R", "L", "L"];
+  it('should return correct seat', () => {
+    const input = ['R', 'R', 'R'];
+    const input2 = ['R', 'L', 'L'];
 
     const expectedAnswer = 7;
     const expectedAnswer2 = 4;
 
     const actualAnswer = binarySearch(input, INITIAL_COLUMN_INTERVAL);
-    const actualAnswer2 = binarySearch(input2, INITIAL_COLUMN_INTERVAL);
+    const actualAnswer2 = binarySearch(
+      input2,
+      INITIAL_COLUMN_INTERVAL,
+    );
 
     expect(actualAnswer).toEqual(expectedAnswer);
     expect(actualAnswer2).toEqual(expectedAnswer2);
   });
 
-  it("should return correct seatID", () => {
+  it('should return correct seatID', () => {
     const expectedAnswer = 567;
     const expectedAnswer2 = 119;
 
@@ -61,7 +68,7 @@ describe("[05]", () => {
     expect(actualAnswer2).toEqual(expectedAnswer2);
   });
 
-  it("should return the highest seatID", () => {
+  it('should return the highest seatID', () => {
     const expectedAnswer = 820;
 
     const actualAnswer = getHighestSeatID(exampleInput);
@@ -69,17 +76,17 @@ describe("[05]", () => {
     expect(actualAnswer).toEqual(expectedAnswer);
   });
 
-  it("Should return rows with missing seats", async () => {
+  it('Should return rows with missing seats', async () => {
     const expectedAnswer = 3;
     const actualAnswer = getRowsWithMissingSeats(exampleInput).length;
 
     expect(actualAnswer).toEqual(expectedAnswer);
   });
 
-  it("[Part 1] - should work with real data", async () => {
-    const input = await readFile(`${__dirname}/data.txt`).then((res) =>
-      res.split("\r\n").filter((line) => line)
-    );
+  it('[Part 1] - should work with real data', async () => {
+    const input = await readFile(
+      `${__dirname}/data.txt`,
+    ).then((res) => res.split('\r\n').filter((line) => line));
 
     // we got this by failing the test the first time
     const expectedAnswer = 871;
@@ -88,10 +95,10 @@ describe("[05]", () => {
     expect(actualAnswer).toEqual(expectedAnswer);
   });
 
-  it("[Part 2] - should work with real data", async () => {
-    const input = await readFile(`${__dirname}/data.txt`).then((res) =>
-      res.split("\r\n").filter((line) => line)
-    );
+  it('[Part 2] - should work with real data', async () => {
+    const input = await readFile(
+      `${__dirname}/data.txt`,
+    ).then((res) => res.split('\r\n').filter((line) => line));
 
     // we got this by failing the test the first time
     const expectedAnswer = 640;
