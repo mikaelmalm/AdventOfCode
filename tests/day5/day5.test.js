@@ -1,10 +1,12 @@
 import { readFile } from "../../utils";
 
 import {
-  formatBoardingPass,
   getSeatID,
-  getHighestSeatID,
+  getMySeatId,
   binarySearch,
+  getHighestSeatID,
+  formatBoardingPass,
+  getRowsWithMissingSeats,
   INITIAL_ROW_INTERVAL,
   INITIAL_COLUMN_INTERVAL,
 } from "../../days/day5";
@@ -67,15 +69,33 @@ describe("[05]", () => {
     expect(actualAnswer).toEqual(expectedAnswer);
   });
 
+  it("Should return rows with missing seats", async () => {
+    const expectedAnswer = 3;
+    const actualAnswer = getRowsWithMissingSeats(exampleInput).length;
+
+    expect(actualAnswer).toEqual(expectedAnswer);
+  });
+
   it("[Part 1] - should work with real data", async () => {
     const input = await readFile(`${__dirname}/data.txt`).then((res) =>
       res.split("\r\n").filter((line) => line)
     );
 
-    const expectedAnswer = 820;
-    console.log(input);
-
+    // we got this by failing the test the first time
+    const expectedAnswer = 871;
     const actualAnswer = getHighestSeatID(input);
+
+    expect(actualAnswer).toEqual(expectedAnswer);
+  });
+
+  it("[Part 2] - should work with real data", async () => {
+    const input = await readFile(`${__dirname}/data.txt`).then((res) =>
+      res.split("\r\n").filter((line) => line)
+    );
+
+    // we got this by failing the test the first time
+    const expectedAnswer = 640;
+    const actualAnswer = getMySeatId(input);
 
     expect(actualAnswer).toEqual(expectedAnswer);
   });
