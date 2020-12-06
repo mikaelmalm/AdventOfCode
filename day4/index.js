@@ -1,19 +1,19 @@
-const fs = require("fs");
+const fs = require('fs');
 
 // Read file helper,
 const readFile = () =>
   fs.promises
-    .readFile(`${__dirname}/data.txt`, "utf8")
+    .readFile(`${__dirname}/data.txt`, 'utf8')
     .then((res) =>
       res
-        .split("\r\n\r\n")
+        .split('\r\n\r\n')
         // go through all fields, and split newlines and remove empty values
         .map((field) =>
           field
             .split(/\s|\r\n/)
-            .filter((field) => field)
-            .map((field) => field.split(":"))
-        )
+            .filter((row) => row)
+            .map((row) => row.split(':')),
+        ),
     )
 
     .catch((err) => console.log(err));
@@ -21,7 +21,8 @@ const readFile = () =>
 const getPassportFields = (passport) =>
   passport.reduce((result, pass) => [...result, pass[0]], []);
 
-const validateRange = (value, min, max) => value >= min && value <= max;
+const validateRange = (value, min, max) =>
+  value >= min && value <= max;
 const validateYear = (year, min, max) =>
   year.length === 4 && validateRange(year, min, max);
 
@@ -32,14 +33,22 @@ const validateHeight = (rawHeight) => {
   const cmValidation = { min: 150, max: 193 };
   const inValidation = { min: 59, max: 76 };
 
-  const validation = format === "cm" ? cmValidation : inValidation;
+  const validation = format === 'cm' ? cmValidation : inValidation;
 
   return height >= validation.min && height <= validation.max;
 };
 
 const validateHairColor = (color) => /^#[a-f0-9]{6}$/.test(color);
 const validateEyeColor = (color) => {
-  const acceptedColors = ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"];
+  const acceptedColors = [
+    'amb',
+    'blu',
+    'brn',
+    'gry',
+    'grn',
+    'hzl',
+    'oth',
+  ];
 
   return acceptedColors.includes(color);
 };
@@ -54,28 +63,28 @@ const validateData = (data) => {
   const [key, value] = data;
 
   switch (key) {
-    case "byr":
+    case 'byr':
       return validateYear(value, 1920, 2002);
 
-    case "iyr":
+    case 'iyr':
       return validateYear(value, 2010, 2020);
 
-    case "eyr":
+    case 'eyr':
       return validateYear(value, 2020, 2030);
 
-    case "hgt":
+    case 'hgt':
       return validateHeight(value);
 
-    case "hcl":
+    case 'hcl':
       return validateHairColor(value);
 
-    case "ecl":
+    case 'ecl':
       return validateEyeColor(value);
 
-    case "pid":
+    case 'pid':
       return validatePassportId(value);
 
-    case "cid":
+    case 'cid':
       // hackerman
       return true;
 
@@ -85,23 +94,33 @@ const validateData = (data) => {
 };
 
 const checkPassports = (passports) => {
-  const requiredKeys = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"];
+  const requiredKeys = [
+    'byr',
+    'iyr',
+    'eyr',
+    'hgt',
+    'hcl',
+    'ecl',
+    'pid',
+  ];
 
   const passportsWithAllFields = passports.filter((passport) => {
     const passportFields = getPassportFields(passport);
 
     const allKeysPresent = requiredKeys.every((key) =>
-      passportFields.includes(key)
+      passportFields.includes(key),
     );
 
     return allKeysPresent;
   });
 
-  const validatedPassport = passportsWithAllFields.filter((passport, index) => {
-    const validated = passport.every((pass) => validateData(pass));
+  const validatedPassport = passportsWithAllFields.filter(
+    (passport) => {
+      const validated = passport.every((pass) => validateData(pass));
 
-    return validated;
-  });
+      return validated;
+    },
+  );
 
   return validatedPassport;
 };
