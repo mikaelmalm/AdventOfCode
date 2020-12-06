@@ -1,12 +1,5 @@
-const fs = require("fs");
-
-// Read file helper,
-const readFile = () =>
-  fs.promises
-    .readFile(`${__dirname}/data.txt`, "utf8")
-    .then((res) => res.split("\r\n"))
-    .then((res) => res.map((field) => field.split("")))
-    .catch((err) => console.log(err));
+const parseData = (data) =>
+  data.split('\r\n').map((field) => field.split(''));
 
 const move = (pos, pattern = { x: 3, y: 1 }) => ({
   x: pos.x + pattern.x,
@@ -26,13 +19,13 @@ const mapStatus = (data, position) => {
 
 const hitTree = (data, position) => {
   const mapPositionStatus = mapStatus(data, position);
-  const TREE = "#";
+  const TREE = '#';
 
   return mapPositionStatus === TREE;
 };
 
-const calculatePath = (data, pattern) => {
-  return data.reduce(
+const calculatePath = (data, pattern) =>
+  data.reduce(
     (result) => {
       // end of slope
       if (result.y === data.length - pattern.y) return result;
@@ -53,20 +46,26 @@ const calculatePath = (data, pattern) => {
       x: 0,
       y: 0,
       treesHit: 0,
-    }
+    },
   );
-};
 
-const calculateTreesHitPerPaths = (data, patterns) => {
-  return patterns.reduce((treesHit, pattern) => {
+const calculateTreesHitPerPaths = (data, patterns) =>
+  patterns.reduce((treesHit, pattern) => {
     const result = calculatePath(data, pattern);
 
     return treesHit * result.treesHit;
   }, 1); // start on one, since we are multiplying
+
+const solution1 = (data) => {
+  const parsedData = parseData(data);
+
+  const result = calculatePath(parsedData, { x: 3, y: 1 });
+
+  return result.treesHit;
 };
 
-const run = async () => {
-  const data = await readFile();
+const solution2 = (data) => {
+  const parsedData = parseData(data);
 
   const patterns = [
     { x: 1, y: 1 },
@@ -76,11 +75,9 @@ const run = async () => {
     { x: 1, y: 2 },
   ];
 
-  const result = calculatePath(data, patterns[1]);
-  const result2 = calculateTreesHitPerPaths(data, patterns);
+  const result = calculateTreesHitPerPaths(parsedData, patterns);
 
-  console.log("part 1", result);
-  console.log("part 2", result2);
+  return result;
 };
 
-run();
+export { solution1, solution2 };
