@@ -1,43 +1,23 @@
-export const INITIAL_ROW_INTERVAL = { min: 0, max: 127 };
-export const INITIAL_COLUMN_INTERVAL = { min: 0, max: 7 };
+const INITIAL_ROW_INTERVAL = { min: 0, max: 127 };
+const INITIAL_COLUMN_INTERVAL = { min: 0, max: 7 };
 const INSTRUCTIONS = {
   LOWER: ['F', 'L'],
   HIGHER: ['B', 'R'],
 };
 
-export const formatBoardingPass = (boardingPass) =>
-  boardingPass.split('').reduce(
-    (formatedPasses, currentInstruction) => {
-      const rowInstructions = ['F', 'B'];
-      const isRowInstruction = rowInstructions.includes(
-        currentInstruction,
-      );
+const formatBoardingPass = (boardingPass) => {
+  const directions = boardingPass.split('');
 
-      if (isRowInstruction) {
-        return {
-          ...formatedPasses,
-          rowDirections: [
-            ...formatedPasses.rowDirections,
-            currentInstruction,
-          ],
-        };
-      }
+  const rowDirections = directions.slice(0, 7);
+  const columnDirections = directions.slice(7);
 
-      return {
-        ...formatedPasses,
-        columnDirections: [
-          ...formatedPasses.columnDirections,
-          currentInstruction,
-        ],
-      };
-    },
-    {
-      rowDirections: [],
-      columnDirections: [],
-    },
-  );
+  return {
+    rowDirections,
+    columnDirections,
+  };
+};
 
-export const binarySearch = (instructions, interval) => {
+const binarySearch = (instructions, interval) => {
   const currentInstruction = instructions[0];
   const isLowerPart = INSTRUCTIONS.LOWER.includes(currentInstruction);
 
@@ -54,7 +34,7 @@ export const binarySearch = (instructions, interval) => {
   return binarySearch(instructions.slice(1), updatedInterval);
 };
 
-export const getSeatID = (row, column) => row * 8 + column;
+const getSeatID = (row, column) => row * 8 + column;
 
 const getAllSeatIDs = (boardingPasses) =>
   boardingPasses.map((boardingPass) => {
@@ -74,7 +54,7 @@ const getAllSeatIDs = (boardingPasses) =>
     return seatID;
   }, 0);
 
-export const getHighestSeatID = (boardingPasses) => {
+const getHighestSeatID = (boardingPasses) => {
   const allSeatIds = getAllSeatIDs(boardingPasses);
 
   return Math.max(...allSeatIds);
@@ -121,7 +101,7 @@ const getEmptySeats = (rowsWithEmptySeats) =>
     return [...result, ...emptyRowSeats];
   }, []);
 
-export const getRowsWithMissingSeats = (takenSeats) =>
+const getRowsWithMissingSeats = (takenSeats) =>
   Object.keys(takenSeats)
     .filter((row) => takenSeats[row].length !== 8)
     .reduce(
@@ -135,7 +115,7 @@ export const getRowsWithMissingSeats = (takenSeats) =>
       [],
     );
 
-export const getMySeatId = (boardingPasses) => {
+const getMySeatId = (boardingPasses) => {
   const takenSeats = getTakenSeats(boardingPasses);
   const rowsWithEmptySeats = getRowsWithMissingSeats(takenSeats);
   const allSeatIds = getAllSeatIDs(boardingPasses);
@@ -156,4 +136,15 @@ export const getMySeatId = (boardingPasses) => {
   });
 
   return mySeatId;
+};
+
+export {
+  getSeatID,
+  getMySeatId,
+  binarySearch,
+  getHighestSeatID,
+  formatBoardingPass,
+  getRowsWithMissingSeats,
+  INITIAL_ROW_INTERVAL,
+  INITIAL_COLUMN_INTERVAL,
 };
