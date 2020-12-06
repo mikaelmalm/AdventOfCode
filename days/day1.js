@@ -1,12 +1,3 @@
-const fs = require('fs');
-
-const readFile = () =>
-  fs.promises
-    .readFile(`${__dirname}/data.txt`, 'utf8')
-    .then((res) => res.split('\r\n'))
-    .then((res) => res.map((field) => +field))
-    .catch((err) => console.log(err));
-
 const parseData = (data) => data.split('\r\n').map((field) => +field);
 
 const multiplyItems = (items) =>
