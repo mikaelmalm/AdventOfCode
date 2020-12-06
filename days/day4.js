@@ -1,22 +1,13 @@
-const fs = require('fs');
-
-// Read file helper,
-const readFile = () =>
-  fs.promises
-    .readFile(`${__dirname}/data.txt`, 'utf8')
-    .then((res) =>
-      res
-        .split('\r\n\r\n')
-        // go through all fields, and split newlines and remove empty values
-        .map((field) =>
-          field
-            .split(/\s|\r\n/)
-            .filter((row) => row)
-            .map((row) => row.split(':')),
-        ),
-    )
-
-    .catch((err) => console.log(err));
+const parseData = (data) =>
+  data
+    .split('\r\n\r\n')
+    // go through all fields, and split newlines and remove empty values
+    .map((field) =>
+      field
+        .split(/\s|\r\n/)
+        .filter((row) => row)
+        .map((row) => row.split(':')),
+    );
 
 const getPassportFields = (passport) =>
   passport.reduce((result, pass) => [...result, pass[0]], []);
@@ -125,12 +116,13 @@ const checkPassports = (passports) => {
   return validatedPassport;
 };
 
-const run = async () => {
-  const data = await readFile();
+// only have solution 2 for this
+const solution = (data) => {
+  const parsedData = parseData(data);
 
-  const result = checkPassports(data);
+  const result = checkPassports(parsedData);
 
-  console.log(result.length);
+  return result.length;
 };
 
-run();
+export default solution;
