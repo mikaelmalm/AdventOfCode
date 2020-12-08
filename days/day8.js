@@ -8,17 +8,13 @@ const parseData = (data) =>
       return [instruction, +value];
     });
 
-// followInstruction
-
 // updateAccumulator
 const updateAccumulator = (accumulator, value) => accumulator + value;
 
 // jump to index
 const jumpToIndex = (currentIndex, value) => currentIndex + value;
 
-const solution1 = (data) => {
-  const instructions = parseData(data);
-
+const runProgram = (instructions) => {
   // initial values for program
   let currentValue = 0;
   const indexHistory = [];
@@ -27,7 +23,9 @@ const solution1 = (data) => {
     const [operation, argument] = instructions[i];
 
     // check if we have been on this instruction before
-    if (indexHistory.includes(i)) return currentValue;
+    if (indexHistory.includes(i))
+      return { value: currentValue, terminated: true };
+
     indexHistory.push(i);
 
     // for now, fuck mutability
@@ -45,13 +43,80 @@ const solution1 = (data) => {
     }
   }
 
-  return currentValue;
+  return { value: currentValue, terminated: false };
+};
+
+const solution1 = (data) => {
+  const instructions = parseData(data);
+
+  const result = runProgram(instructions);
+  return result.value;
+};
+
+// find all indexes of wanted value
+const findAllIndexes = (instructions, type) => {
+  const indexes = instructions.reduce((acc, instruction, index) => {
+    if (instruction[0] === type) return [...acc, index];
+    return acc;
+  }, []);
+
+  return indexes;
+};
+
+const updateInstruction = (
+  newInstructionIndexes,
+  newInstruction,
+  instructions,
+  index,
+) => {
+  const instructionIndex = newInstructionIndexes[index];
+  const argument = instructions[instructionIndex][1];
+
+  const preArr = instructions.slice(0, instructionIndex);
+  const afterArr = instructions.slice(instructionIndex + 1);
+
+  const updatedInstructions = [
+    ...preArr,
+    [newInstruction, argument],
+    ...afterArr,
+  ];
+
+  return updatedInstructions;
 };
 
 const solution2 = (data) => {
   const instructions = parseData(data);
+  const jmpInstructions = findAllIndexes(instructions, 'jmp');
+  const nopInstructions = findAllIndexes(instructions, 'nop');
 
-  return instructions;
+  // try changing all jmp
+  for (let i = 0; i < jmpInstructions.length; i += 1) {
+    const updatedInstructions = updateInstruction(
+      jmpInstructions,
+      'nop',
+      instructions,
+      i,
+    );
+
+    const result = runProgram(updatedInstructions);
+
+    if (!result.terminated) return result.value;
+  }
+
+  for (let i = 0; i < nopInstructions.length; i += 1) {
+    const updatedInstructions = updateInstruction(
+      nopInstructions,
+      'jmp',
+      instructions,
+      i,
+    );
+
+    const result = runProgram(updatedInstructions);
+
+    if (!result.terminated) return result.value;
+  }
+
+  return 'could not be found';
 };
 
-export { parseData, solution1, solution2 };
+export { parseData, findAllIndexes, solution1, solution2 };
