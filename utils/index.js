@@ -1,3 +1,5 @@
-const fs = require("fs");
+const fs = require('fs');
 
-export const readFile = (filename) => fs.promises.readFile(filename, "utf8");
+// eslint-disable-next-line import/prefer-default-export
+export const readFile = (filename) =>
+  fs.promises.readFile(filename, 'utf8');
