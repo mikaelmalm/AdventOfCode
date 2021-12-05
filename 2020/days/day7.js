@@ -19,7 +19,7 @@ const formatBagItems = (bagItems) =>
 
 const parseData = (data) =>
   data
-    .split('\r\n')
+    .split('\n')
     .filter((line) => line.trim())
     .reduce((sum, group) => {
       const splitGroup = group

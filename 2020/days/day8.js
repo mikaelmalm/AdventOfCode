@@ -1,6 +1,6 @@
 const parseData = (data) =>
   data
-    .split('\r\n')
+    .split('\n')
     .filter((line) => line)
     .map((line) => {
       const [instruction, value] = line.split(' ');
@@ -19,7 +19,7 @@ const runProgram = (instructions) => {
   let currentValue = 0;
   const indexHistory = [];
 
-  for (let i = 0; i < instructions.length; ) {
+  for (let i = 0; i < instructions.length;) {
     const [operation, argument] = instructions[i];
 
     // check if we have been on this instruction before

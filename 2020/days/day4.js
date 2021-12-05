@@ -1,10 +1,10 @@
 const parseData = (data) =>
   data
-    .split('\r\n\r\n')
+    .split('\n\n')
     // go through all fields, and split newlines and remove empty values
     .map((field) =>
       field
-        .split(/\s|\r\n/)
+        .split(/\s|\n/)
         .filter((row) => row)
         .map((row) => row.split(':')),
     );

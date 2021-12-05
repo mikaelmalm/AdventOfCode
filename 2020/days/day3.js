@@ -1,5 +1,5 @@
 const parseData = (data) =>
-  data.split('\r\n').map((field) => field.split(''));
+  data.split('\n').map((field) => field.split(''));
 
 const move = (pos, pattern = { x: 3, y: 1 }) => ({
   x: pos.x + pattern.x,

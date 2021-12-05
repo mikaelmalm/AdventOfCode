@@ -1,7 +1,7 @@
 const parseData = (data) =>
-  data.split('\r\n\r\n').map((group) =>
+  data.split('\n\n').map((group) =>
     group
-      .split('\r\n')
+      .split('\n')
       .filter((result) => result)
       .map((answer) => answer.split('')),
   );

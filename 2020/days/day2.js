@@ -1,8 +1,9 @@
 const parseData = (data) =>
-  data.split('\r\n').map((field) => field.split(': '));
+  data.split('\n').map((field) => field.split(': '));
 
 const solution1 = (data) => {
   const input = parseData(data);
+  console.log({ input })
 
   const result = input.filter((field) => {
     const [timesNeeded, charNeeded] = field[0].split(' ');

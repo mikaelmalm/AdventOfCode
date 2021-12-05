@@ -1,6 +1,6 @@
 const parseData = (data) =>
   data
-    .split('\r\n')
+    .split('\n')
     .filter((line) => line)
     .map((field) => +field);
 

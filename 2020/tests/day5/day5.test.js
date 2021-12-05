@@ -86,7 +86,7 @@ describe('[05]', () => {
   it('[Part 1] - should work with real data', async () => {
     const input = await readFile(
       `${__dirname}/data.txt`,
-    ).then((res) => res.split('\r\n').filter((line) => line));
+    ).then((res) => res.split('\n').filter((line) => line));
 
     // we got this by failing the test the first time
     const expectedAnswer = 871;
@@ -98,7 +98,7 @@ describe('[05]', () => {
   it('[Part 2] - should work with real data', async () => {
     const input = await readFile(
       `${__dirname}/data.txt`,
-    ).then((res) => res.split('\r\n').filter((line) => line));
+    ).then((res) => res.split('\n').filter((line) => line));
 
     // we got this by failing the test the first time
     const expectedAnswer = 640;

@@ -1,4 +1,4 @@
-const parseData = (data) => data.split('\r\n').map((field) => +field);
+const parseData = (data) => data.split('\n').map((field) => +field);
 
 const multiplyItems = (items) =>
   items.reduce((sum, item) => sum * item, 1);
