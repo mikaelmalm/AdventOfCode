@@ -18,6 +18,7 @@ const solution1 = (data) => {
 
   return depthIncreasedTimes;
 };
+
 const solution2 = (data) => {
   const input = parseData(data);
 
