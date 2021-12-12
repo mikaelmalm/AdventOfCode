@@ -7,7 +7,7 @@ describe('[01]', () => {
     const input = await readFile(`${__dirname}/data.txt`);
 
     // we got this by failing the test the first time
-    const expectedAnswer = 1010299;
+    const expectedAnswer = 1020084;
     const actualAnswer = solution1(input);
 
     expect(actualAnswer).toEqual(expectedAnswer);
@@ -17,7 +17,7 @@ describe('[01]', () => {
     const input = await readFile(`${__dirname}/data.txt`);
 
     // we got this by failing the test the first time
-    const expectedAnswer = 42140160;
+    const expectedAnswer = 295086480;
     const actualAnswer = solution2(input);
 
     expect(actualAnswer).toEqual(expectedAnswer);
