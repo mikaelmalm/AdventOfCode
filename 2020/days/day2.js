@@ -3,7 +3,6 @@ const parseData = (data) =>
 
 const solution1 = (data) => {
   const input = parseData(data);
-  console.log({ input })
 
   const result = input.filter((field) => {
     const [timesNeeded, charNeeded] = field[0].split(' ');
