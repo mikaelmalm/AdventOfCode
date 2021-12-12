@@ -146,11 +146,36 @@ const solution1 = (data) => {
 };
 
 const solution2 = (data) => {
-  const input = parseData(data);
+  const { numbers, cards } = parseData(data);
 
-  const result = input;
+  let cardsToCheck = cards.map((card) => card.original);
+  let bingoNumber = -1;
+  let bingoCard;
 
-  return result;
+  for (let index = 0; index < numbers.length; index++) {
+    const checkedCards = cardsToCheck.map((card) => {
+      const checkedCard = checkNumber(card, numbers[index]);
+
+      return checkedCard;
+    });
+
+    const notStillWinners = checkedCards.filter(
+      (card) => !evaluateCard(card),
+    );
+
+    if (notStillWinners.length === 0) {
+      bingoNumber = numbers[index];
+      bingoCard = checkedCards[0];
+
+      break;
+    }
+
+    cardsToCheck = notStillWinners;
+  }
+
+  const sumOfCard = calculateSumOfCard(bingoCard);
+
+  return sumOfCard * bingoNumber;
 };
 
 export { solution1, solution2 };
