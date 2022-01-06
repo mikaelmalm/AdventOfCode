@@ -1,6 +1,6 @@
-import { readFile } from '../../utils';
+import { readFile } from '../utils';
 
-import { solution1, solution2 } from '../../days/day5';
+import { solution1, solution2 } from './day5';
 
 describe('[01]', () => {
   it('[Part 1] - should work with test data', async () => {
