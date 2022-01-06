@@ -1,6 +1,7 @@
 const NEW_FISH_TIMER = 8;
 const FISH_RESET_TIMER = 6;
-const EMPTY_COUNT_ARR = () => new Array(NEW_FISH_TIMER + 1).fill(0);
+const EMPTY_COUNT_ARR = (): number[] =>
+  new Array(NEW_FISH_TIMER + 1).fill(0);
 
 const sum = (values: number[]) =>
   values.reduce(
@@ -26,7 +27,7 @@ export const countFishGrowth = (fishData: string, days: number) => {
     let newFishes = 0;
 
     const updatedFishValues = fishesOnCounter.reduce(
-      (sum, fishTimer, index): number[] => {
+      (sum: number[], fishTimer: number, index: number): number[] => {
         if (index === 0) {
           newFishes = fishTimer;
           return sum;
